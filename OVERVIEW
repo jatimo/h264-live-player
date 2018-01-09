@@ -1,0 +1,12 @@
+The h264-live-player package implements a nodejs based http/ws service that can take h264 elementary video streams from a number of sources -- static file, raspberry pi camera hardware (really just a pipe to the raspivid program running locally), or a tcp socket. The tcp socket method is the primary point of interest here and used in this extension of the package to ingest a raspicam's raw h264 stream.
+
+During ingestion the service separates the data stream by NAL headers (which delimit the beginnings of video frames), and makes the resulting stream of delimited frames available via websocket request to subscribing clients. This allows the client to effectively decode the h264 data and keep up with real time decoding and presentation in the browser, dropping frames as necessary with the help of requestAnimationFrame as the throttling mechanism.
+
+The client app (wsAvcPlayer) is comprised of Broadway javascript h264 decoder, ostensibly implemented using asm.js, as well as some customization to handle connection states with the service. The server maintains a list of connected clients and broadcasts the video data to them, which does properly handle disconnects from browser shutdown as well as activation of the hook exposed for disconnecting the client (in sample as browser button).
+
+Links are included in the example to also affect start/stop of the stream. In this way, the stream can be left idle without transmitting data when it is not in use. It is also trivial to make the stream run at all times, or to automatically start/stop when  at least one browser client has connected.
+
+The file raspi-relay-server.js adds an endpoint to aid in generating a proper command line suitable for use on a raspberry pi, to ensure the arguments are in agreement with the settings specified to the server. It is important that these arguments agree in order to avoid "garbled" video data. If it is necessary to change the dimensions of the video playback, this should be possible using CSS and/or javascript at the browser level. 
+
+In the example, the player window is dynamically created, but this can also be a pre-existing DOM object which is referenced to the wsAvcPlayer during instantiation.
+

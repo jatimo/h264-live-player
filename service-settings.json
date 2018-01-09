@@ -1,0 +1,10 @@
+{
+  "feed_ip": "192.168.1.40",
+  "feed_port": 5001,
+  "server_ip": "192.168.1.130",
+  "server_port": 8080,
+  "width": 1280,
+  "height": 720,
+  "intra": 12,
+  "fps": 25
+}

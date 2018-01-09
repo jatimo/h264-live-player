@@ -1,0 +1,34 @@
+## Installation instructions
+
+## Server side
+
+## - Install nodejs on target server host. This was tested with nodejs v9.3.0. from nvm based install. 
+## - Ensure git and npm are available.
+## - Clone or download respository found here.  https://github.com/jatimo/h264-live-player or use below command
+
+#! git clone https://github.com/jatimo/h264-live-player.git
+
+#! cd h264-live-player
+#! npm install
+
+## Modify service-settings.json appropriately. The "intra" setting determines how many frames are sent before a 
+## key frame will be added. When a new client starts a live stream without a key frame yet available, they may experience
+## momentary blue or green screens, or garbled video data until a new key frame is sent. A setting of 1 will ensure every
+## frame is a key frame (never garbled video), at the expense of much lower quality and/or increased bandwidth. A setting
+## of 12 for 25fps ensures  there is never longer than about 500ms garbled video at worst, with acceptable video quality.
+
+## The below command will run the service. This service is responsible for connecting to the RasPi in the config 
+## settings, and receiving its raw video data. It parses the NAL frames so that the video can be delivered one frame
+## at a time to the client (in the browser). 
+
+#! node ./raspi-relay-server.js
+
+## The server on startup will output an appropriate line for use on the raspberry pi. The raspberry pi host 
+## does not need any special software to function in this role beyond the raspivid utility. 
+
+
+
+
+
+
+
