@@ -17,7 +17,7 @@ ws.on('open', function open() {
     console.log("Connected.");
     key = md5(options.private_key + options.stream_name);
     console.log("crypto hash: " + key);
-    ws.send("FEEDSTREAM foo " + key);
+    ws.send("FEEDSTREAM " + options.stream_name + " " + key);
     streamer.stdout.on("data", function(data){
       try {
         ws.send(data);
