@@ -27,17 +27,17 @@ app.get('/streams', function(req,res,next){
   var output = "<h4>Feeds</h4><ul>\n";
   if (app.server.wss.clients.length == 0) {
     output += "</ul>\n";
-    res.send(output);
   }
-  app.server.wss.clients.forEach(function(client) {
-    if (client.feeder) {
-      output += "\t<li><a href='/view/" + client.stream_name + "'>"+ client.stream_name + "</a></li>\n"
-    }
+  if (app.server.wss.clients.length != 0 ) {
+    app.server.wss.clients.forEach(function(client) {
+      if (client.feeder) {
+        output += "\t<li><a href='/view/" + client.stream_name + "'>"+ client.stream_name + "</a></li>\n";
+      }
+    });
+  }
   output += "</ul>\n";
-  
   res.send(output);
- 
-})});
+});
 
 
 
