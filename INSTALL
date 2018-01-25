@@ -83,7 +83,7 @@
 ## This will be indicated by an error to start with the following output:
 
 ## Failure 64
-or 
+## or 
 ## Failure 70
 
 ## To remedy this situation, kill any zombie raspivid processes and restart the service:
