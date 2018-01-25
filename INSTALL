@@ -1,16 +1,9 @@
 ## Installation instructions
 
 ## Server side
-## Install Dependencies
-#############
+## #####
 
-## nvm
-######
-## used to manage multiple installed versions of nodejs.
-
-#! curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.0/install.sh | bash
-#! nvm install node
-#! nvm use node
+## needs npm and node previously installed. Recommend nvm.
 
 ## git
 ######
@@ -35,6 +28,10 @@
 ## Modify service-settings.json appropriately. 
 
 ## INFO:
+
+## The "private key" should be the same on clients and server. This data is not transmitted but is digested
+## cryptographically. The resulting digest hash is transmitted and used for comparison for auth purposes.
+
 ## The "intra" setting determines how many frames are sent before a 
 ## key frame will be added. When a new client starts a live stream without a key frame yet available, they may experience
 ## momentary blue or green screens, or garbled video data until a new key frame is sent. A setting of 1 will ensure every
@@ -57,7 +54,46 @@
 ## does not need any special software to function in this role beyond the raspivid utility. 
 
 
+## Restrictions
+## The server and client resolution settings need to be the same. All remote feeders must use the same resolution settings. 
 
+
+
+## CLIENT SIDE Installation
+##############
+
+## For node dependency, a .deb pakage is provided for convenience. The repo needs to be installed as with the server side.
+
+## Run on Raspi Zero:
+
+#! cd /usr/src
+#! apt-get install -y git 
+#! git clone https://github.com/jatimo/h264-live-player.git
+#! cd h264-live-player
+#! dpkg -i node_latest_armhf.deb
+#! npm install
+
+## Modify service-settings.json as with server side.
+
+## To run the video feeder service:
+
+#! node ./feeder.js
+
+## Note that if past processes exited ungracefully, there may be a zombie process of raspivid which prevents you from starting the feeder.
+## This will be indicated by an error to start with the following output:
+
+## Failure 64
+or 
+## Failure 70
+
+## To remedy this situation, kill any zombie raspivid processes and restart the service:
+
+#! killall raspivid; node ./feeder.js
+
+## To view a list of the available stream, visit http://server_ip:port/streams
+
+## This page must be reloaded as is with this demo, but could also be used as an API/AJAX call
+## to dynamically refresh an element on another page.
 
 
 

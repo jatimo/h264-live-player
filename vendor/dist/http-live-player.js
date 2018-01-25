@@ -4430,6 +4430,9 @@ var WSAvcPlayer = new Class({
 
     this.ws.onopen = () => {
       log("Connected to " + url);
+      this.ws.send("GET " + location.pathname);
+      console.log("sending: GET " + location.pathname);
+
     };
 
 
